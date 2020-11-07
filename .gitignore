@@ -3,3 +3,12 @@
 ################################################################################
 
 /.vs/FindDuplicateFiles/v16
+/.vs
+/DuplicatesGui/bin/Debug
+/DuplicatesGui/obj/Debug
+/DuplicatesGui/obj/Release
+/DuplicatesLib/bin/Debug/netstandard2.0
+/DuplicatesLib/obj
+/packages
+/WpfDocumentPreviewer/obj
+/WpfDocumentPreviewer/bin/Debug
