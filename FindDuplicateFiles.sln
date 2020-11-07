@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuplicatesLib", "DuplicatesLib\DuplicatesLib.csproj", "{B4934EBD-25E0-4E44-8977-0484C123089B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuplicatesGui", "DuplicatesGui\DuplicatesGui.csproj", "{1E229023-8728-4743-8547-8A4AAB46D8D8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6A63405A-B6BB-4095-B48C-E720DE021482} = {6A63405A-B6BB-4095-B48C-E720DE021482}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDocumentPreviewer", "WpfDocumentPreviewer\WpfDocumentPreviewer.csproj", "{6A63405A-B6BB-4095-B48C-E720DE021482}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4934EBD-25E0-4E44-8977-0484C123089B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4934EBD-25E0-4E44-8977-0484C123089B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4934EBD-25E0-4E44-8977-0484C123089B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4934EBD-25E0-4E44-8977-0484C123089B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E229023-8728-4743-8547-8A4AAB46D8D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E229023-8728-4743-8547-8A4AAB46D8D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E229023-8728-4743-8547-8A4AAB46D8D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E229023-8728-4743-8547-8A4AAB46D8D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A63405A-B6BB-4095-B48C-E720DE021482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A63405A-B6BB-4095-B48C-E720DE021482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A63405A-B6BB-4095-B48C-E720DE021482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A63405A-B6BB-4095-B48C-E720DE021482}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {541A60A8-D2D6-4DE3-A3C8-22B910298930}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,13 @@
+﻿<Window x:Class="DuplicatesGui.View.PreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:WpfDocumentPreviewer="clr-namespace:WpfDocumentPreviewer;assembly=WpfDocumentPreviewer"
+        mc:Ignorable="d"
+        Title="PreviewWindow" Height="450" Width="800">
+    <Grid VerticalAlignment="Stretch">
+        <Viewbox Grid.Row="3" Grid.Column="2" StretchDirection="Both" Stretch="Uniform">
+            <WpfDocumentPreviewer:PreviewerControl x:Name="previewControl"/>
+        </Viewbox>
+    </Grid>
+</Window>
