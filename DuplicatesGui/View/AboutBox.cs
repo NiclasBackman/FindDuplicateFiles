@@ -16,7 +16,9 @@ namespace DuplicatesGui.View
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = "Zalcin Soft";// AssemblyCompany;
-            this.textBoxDescription.Text = "Scan files system and look for duplicate files based of filter";// AssemblyDescription;
+            this.textBoxDescription.Text = "Scan files system and look for duplicate files based of filter";
+            this.textBoxDescription.Text += Environment.NewLine + "Used 3:rd party products:" + Environment.NewLine + " - WPF Document Previewer, https://archive.codeplex.com/?p=wpffilepreviewer";
+
             Closing += HandleWindowClosed;
 
         }
