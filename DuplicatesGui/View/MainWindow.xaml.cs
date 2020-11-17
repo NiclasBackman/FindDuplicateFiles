@@ -16,7 +16,6 @@ namespace DuplicatesGui.View
     {
         private IPreviewWindow previewWindow;
         private ISettingsWindow settingsWindow;
-        private IContainerProvider container;
 
         public MainWindow(IDuplicatesViewModel viewModel)
         {
@@ -25,17 +24,14 @@ namespace DuplicatesGui.View
 
         public MainWindow(IContainerProvider container)
         {
-            this.container = container;
             InitializeComponent();
-            //previewWindow = new PreviewWindow();
             previewWindow = container.Resolve<IPreviewWindow>();
             previewWindow.Hide();
-            var settingsVm = container.Resolve<ISettingsViewModel>();// new SettingsViewModel();
-            settingsWindow = container.Resolve<ISettingsWindow>(); //new SettingsWindow(settingsVm);
+            var settingsVm = container.Resolve<ISettingsViewModel>();
+            settingsWindow = container.Resolve<ISettingsWindow>();
             var queryService = container.Resolve<IDuplicateFinder>();
             settingsWindow.Hide();
-            //var settingsVm = container.Resolve<ISettingsWindow>();
-            DataContext = new DuplicatesViewModel(previewWindow, settingsVm, settingsWindow, queryService, container.Resolve<IAboutBox>());
+            DataContext = new DuplicatesViewModel(previewWindow, settingsWindow, queryService, container.Resolve<IAboutBox>(), container.Resolve<ISettingsService>());
         }
 
         private void listView_Click(object sender, MouseButtonEventArgs e)

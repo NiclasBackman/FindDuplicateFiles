@@ -1,4 +1,5 @@
 ﻿using DuplicatesGui.Interface;
+using DuplicatesGui.Services;
 using DuplicatesGui.View;
 using DuplicatesGui.ViewModel;
 using Prism.Ioc;
@@ -18,6 +19,7 @@ namespace DuplicatesGui.Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<ISettingsService, SettingsService>();
             containerRegistry.RegisterSingleton<IPreviewWindow, PreviewWindow>();
             containerRegistry.RegisterSingleton<ISettingsWindow, SettingsWindow>();
             containerRegistry.RegisterSingleton<ISettingsViewModel, SettingsViewModel>();

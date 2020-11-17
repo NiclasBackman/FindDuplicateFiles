@@ -1,12 +1,8 @@
 ﻿using DuplicatesGui.Interface;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Xml.Serialization;
 
 namespace DuplicatesGui.ViewModel
 {
@@ -16,58 +12,41 @@ namespace DuplicatesGui.ViewModel
         private ICommand okCommand;
         private ICommand cancelCommand;
         private AttributeContainer<string> filterContainer;
-        private List<IObserver<string>> observers;
-        private readonly ObservableProperty<Settings> settingsSavedObservable;
-        private readonly string settingsFileName;
+        private readonly ISettingsService settingsService;
 
-        public SettingsViewModel()
+        public SettingsViewModel(ISettingsWindow settingsWindow,
+                                 ISettingsService settingsService)
         {
-            observers = new List<IObserver<string>>();
             okCommand = new CommandHandler(() => HandleOK(), () => CanExecuteOK);
             cancelCommand = new CommandHandler(() => HandleCancel(), () => CanExecuteCancel);
             filterContainer = new AttributeContainer<string>(string.Empty, new FilterValidationRule());
-            settingsSavedObservable = new ObservableProperty<Settings>();
-            var basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Zalcin");
-            if (!Directory.Exists(basePath))
-            {
-                Directory.CreateDirectory(basePath);
-            }
-            settingsFileName = Path.Combine(basePath, "Settings.xml");
-
-            LoadData();
+            UpdateViewModel(settingsService.QuerySettings());
+            settingsWindow.DataContext = this;
+            this.settingsService = settingsService;
         }
 
         public void Activate()
         {
-            LoadData();
+            UpdateViewModel(settingsService.QuerySettings());
         }
 
-        private void LoadData()
+        private bool IsChanged()
         {
-            if (File.Exists(settingsFileName))
-            {
-                using (Stream reader = new FileStream(settingsFileName, FileMode.Open))
-                {
-                    XmlSerializer mySerializer = new XmlSerializer(typeof(Settings));
-                    var items = (Settings)mySerializer.Deserialize(reader);
-                    Filter = items.Filter;
-                }
-            }
-            else
-            {
-                Filter = "*.*";
-            }
+            var settings = new Settings(filterContainer.Value);
+            var savedSettings = settingsService.QuerySettings();
+            var res = settings.Equals(savedSettings);
+            return !settings.Equals(savedSettings);
+        }
+
+        void UpdateViewModel(Settings settings)
+        {
+            Filter = settings != null ? settings.Filter : "*.*";
         }
 
         private void HandleOK()
         {
             var settings = new Settings(filterContainer.Value);
-            settingsSavedObservable.Publish(settings);
-            using (StreamWriter myWriter = new StreamWriter(settingsFileName, false))
-            {
-                XmlSerializer mySerializer = new XmlSerializer(typeof(Settings));
-                mySerializer.Serialize(myWriter, settings);
-            }
+            settingsService.SaveSettings(settings);
         }
 
         public bool CanExecuteOK
@@ -75,7 +54,7 @@ namespace DuplicatesGui.ViewModel
             get
             {
                 var res = filterContainer.Rule.Validate(Filter, CultureInfo.InvariantCulture);
-                return res.IsValid;
+                return res.IsValid && IsChanged();
             }
         }
 
@@ -129,11 +108,6 @@ namespace DuplicatesGui.ViewModel
         public string Error
         {
             get { return "...."; }
-        }
-
-        public ObservableProperty<Settings> SettingsSavedObservable 
-        {
-            get => settingsSavedObservable;
         }
 
         /// <summary>

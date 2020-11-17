@@ -9,10 +9,9 @@ namespace DuplicatesGui.View
     /// </summary>
     public partial class SettingsWindow : Window, ISettingsWindow
     {
-        public SettingsWindow(ISettingsViewModel dataContext)
+        public SettingsWindow()
         {
             InitializeComponent();
-            DataContext = dataContext;
             Closing += HandleWindowClosed;
         }
 

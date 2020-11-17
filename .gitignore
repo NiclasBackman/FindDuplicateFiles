@@ -12,3 +12,8 @@
 /packages
 /WpfDocumentPreviewer/obj
 /WpfDocumentPreviewer/bin/Debug
+/DuplicatesGui/bin/Release
+/DuplicatesLib/bin/Release/netstandard2.0
+/FindDuplicateFiles/bin/Debug/netcoreapp3.1
+/FindDuplicateFiles/obj
+/test

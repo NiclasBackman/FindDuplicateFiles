@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Duplicate-Files-Fixer_icon-190x190.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.5\lib\net47\CommonServiceLocator.dll</HintPath>
@@ -96,6 +99,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interface\IAboutBox.cs" />
+    <Compile Include="Interface\IMainWindow.cs" />
+    <Compile Include="Interface\ISettingsService.cs" />
+    <Compile Include="Interface\IView.cs" />
+    <Compile Include="ViewModel\Settings.cs" />
     <Compile Include="ViewModel\AttributeContainer.cs" />
     <Compile Include="ViewModel\CursorHelper.cs" />
     <Compile Include="Converters\FileExistenceToColorConverter.cs" />
@@ -106,6 +113,7 @@
     <Compile Include="Interface\ISettingsWindow.cs" />
     <Compile Include="Interface\IPreviewWindow.cs" />
     <Compile Include="ViewModel\ObservableProperty.cs" />
+    <Compile Include="Services\SettingsService.cs" />
     <Compile Include="View\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,6 +213,11 @@
   <ItemGroup>
     <Resource Include="Icons\settings.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\Duplicate-Files-Fixer_icon-190x190.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Duplicate-Files-Fixer_icon-190x190.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

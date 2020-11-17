@@ -31,15 +31,14 @@ namespace DuplicatesGui.ViewModel
         private readonly IPreviewWindow previewWindow;
         private readonly ISettingsWindow settingsWindow;
         private readonly IDuplicateFinder queryService;
-        private readonly IAboutBox aboutWindow;
+        private readonly IAboutBox aboutBox;
         private string filter;
-        private ISettingsViewModel settingsViewModel;
 
         public DuplicatesViewModel(IPreviewWindow previewWindow,
-                                   ISettingsViewModel settingsViewModel,
                                    ISettingsWindow settingsWindow,
                                    IDuplicateFinder queryService,
-                                   IAboutBox aboutWindow)
+                                   IAboutBox aboutWindows,
+                                   ISettingsService settingsService)
         {
             Duplicates = new ObservableCollection<SingleFileEntry>();
             SelectedDuplicates = new ObservableCollection<SingleFileEntry>();
@@ -69,10 +68,9 @@ namespace DuplicatesGui.ViewModel
             this.previewWindow = previewWindow;
             this.settingsWindow = settingsWindow;
             this.queryService = queryService;
-            this.aboutWindow = aboutWindow;
-            this.settingsViewModel = settingsViewModel;
-            settingsViewModel.SettingsSavedObservable.Subscribe(HandleFilterSaved);
-            Filter = settingsViewModel.Filter;
+            this.aboutBox = aboutWindows;
+            settingsService.SettingsSavedObservable.Subscribe(HandleFilterSaved);
+            Filter = settingsService.QuerySettings().Filter;
         }
 
         private void HandleFilterSaved(Settings value)
@@ -201,17 +199,16 @@ namespace DuplicatesGui.ViewModel
 
         private void HandleAbout()
         {
-            if(aboutWindow.IsVisible())
+            if(aboutBox.IsVisible())
             {
                 return;
             }
 
-            aboutWindow.Show();
+            aboutBox.Show();
         }
 
         private void HandleShowSettings()
         {
-            settingsViewModel.Activate();
             settingsWindow.Show();
         }
 

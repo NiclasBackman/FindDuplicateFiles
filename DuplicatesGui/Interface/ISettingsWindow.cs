@@ -2,7 +2,7 @@
 
 namespace DuplicatesGui.Interface
 {
-    public interface ISettingsWindow
+    public interface ISettingsWindow : IView
     {
         void Show();
 
