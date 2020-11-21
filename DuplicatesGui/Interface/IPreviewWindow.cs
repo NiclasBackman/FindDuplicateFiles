@@ -1,6 +1,6 @@
 ﻿namespace DuplicatesGui.Interface
 {
-    public interface IPreviewWindow
+    public interface IPreviewWindow : IView
     {
         void Show();
 

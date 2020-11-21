@@ -25,6 +25,7 @@ namespace DuplicatesGui.View
         public MainWindow(IContainerProvider container)
         {
             InitializeComponent();
+            container.Resolve<IPreviewViewModel>();
             previewWindow = container.Resolve<IPreviewWindow>();
             previewWindow.Hide();
             var settingsVm = container.Resolve<ISettingsViewModel>();

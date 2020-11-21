@@ -12,6 +12,7 @@ namespace DuplicatesGui.ViewModel
         private ICommand okCommand;
         private ICommand cancelCommand;
         private AttributeContainer<string> filterContainer;
+        private readonly ISettingsWindow settingsWindow;
         private readonly ISettingsService settingsService;
 
         public SettingsViewModel(ISettingsWindow settingsWindow,
@@ -22,6 +23,7 @@ namespace DuplicatesGui.ViewModel
             filterContainer = new AttributeContainer<string>(string.Empty, new FilterValidationRule());
             UpdateViewModel(settingsService.QuerySettings());
             settingsWindow.DataContext = this;
+            this.settingsWindow = settingsWindow;
             this.settingsService = settingsService;
         }
 
@@ -47,6 +49,7 @@ namespace DuplicatesGui.ViewModel
         {
             var settings = new Settings(filterContainer.Value);
             settingsService.SaveSettings(settings);
+            settingsWindow.Hide();
         }
 
         public bool CanExecuteOK

@@ -21,6 +21,7 @@ namespace DuplicatesGui.Module
         {
             containerRegistry.RegisterSingleton<ISettingsService, SettingsService>();
             containerRegistry.RegisterSingleton<IPreviewWindow, PreviewWindow>();
+            containerRegistry.RegisterSingleton<IPreviewViewModel, PreviewViewModel>();
             containerRegistry.RegisterSingleton<ISettingsWindow, SettingsWindow>();
             containerRegistry.RegisterSingleton<ISettingsViewModel, SettingsViewModel>();
             containerRegistry.RegisterSingleton<IAboutBox, AboutBox>();

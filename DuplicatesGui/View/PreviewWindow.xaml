@@ -4,10 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:WpfDocumentPreviewer="clr-namespace:WpfDocumentPreviewer;assembly=WpfDocumentPreviewer"
         mc:Ignorable="d"
-        Title="PreviewWindow" Height="450" Width="800">
+        Title="PreviewWindow" Height="870" Width="800">
     <Grid VerticalAlignment="Stretch">
-        <Viewbox Grid.Row="3" Grid.Column="2" StretchDirection="Both" Stretch="Uniform">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Viewbox StretchDirection="UpOnly" Stretch="Fill">
             <WpfDocumentPreviewer:PreviewerControl x:Name="previewControl"/>
         </Viewbox>
+        <Button Grid.Row="3" Grid.Column="2" Content="Close" Width="50" Height="20" Margin="10,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Command="{Binding CloseCommand}"/>
     </Grid>
 </Window>
