@@ -2,6 +2,7 @@
 using DuplicatesLib;
 using Microsoft.VisualBasic.FileIO;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -33,6 +34,21 @@ namespace DuplicatesGui.ViewModel
         private readonly IDuplicateFinder queryService;
         private readonly IAboutBox aboutBox;
         private string filter;
+
+        public DuplicatesViewModel()
+        {
+            StartPath = $"C:\\Users\\Surface Pro\\Desktop\\Ny mapp";
+            Filter = "*.jpg";
+            Duplicates = new ObservableCollection<SingleFileEntry>();
+            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            DirectoryInfo dir = new DirectoryInfo(desktopPath);
+            IEnumerable<FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.TopDirectoryOnly);
+            foreach(var file in fileList)
+            {
+                Duplicates.Add(new SingleFileEntry(file.FullName, "123456"));
+
+            }
+        }
 
         public DuplicatesViewModel(IPreviewWindow previewWindow,
                                    ISettingsWindow settingsWindow,

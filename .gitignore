@@ -2,18 +2,20 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/FindDuplicateFiles/v16
-/.vs
-/DuplicatesGui/bin/Debug
-/DuplicatesGui/obj/Debug
-/DuplicatesGui/obj/Release
-/DuplicatesLib/bin/Debug/netstandard2.0
-/DuplicatesLib/obj
-/packages
-/WpfDocumentPreviewer/obj
-/WpfDocumentPreviewer/bin/Debug
-/DuplicatesGui/bin/Release
-/DuplicatesLib/bin/Release/netstandard2.0
 /FindDuplicateFiles/bin/Debug/netcoreapp3.1
 /FindDuplicateFiles/obj
 /test
+/.vs
+/DuplicatesLib/bin/Debug/netstandard2.0
+/DuplicatesLib/obj
+/DuplicatesGui/bin/Debug
+/DuplicatesGui/obj/Debug
+/WpfDocumentPreviewer/bin/Debug
+/WpfDocumentPreviewer/obj/Debug
+/packages/System.Windows.Interactivity.WPF.2.0.20525
+/DuplicatesGui/obj/Release
+/WpfDocumentPreviewer/obj/Release
+/packages
+/DuplicatesGui/bin/Release
+/DuplicatesLib/bin/Release/netstandard2.0
+/WpfDocumentPreviewer/bin/Release

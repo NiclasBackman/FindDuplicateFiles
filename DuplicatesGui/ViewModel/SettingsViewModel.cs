@@ -20,8 +20,9 @@ namespace DuplicatesGui.ViewModel
         {
             okCommand = new CommandHandler(() => HandleOK(), () => CanExecuteOK);
             cancelCommand = new CommandHandler(() => HandleCancel(), () => CanExecuteCancel);
-            filterContainer = new AttributeContainer<string>(string.Empty, new FilterValidationRule());
-            UpdateViewModel(settingsService.QuerySettings());
+            var settings = settingsService.QuerySettings();
+            filterContainer = new AttributeContainer<string>(settings.Filter, new FilterValidationRule());
+            UpdateViewModel(settings);
             settingsWindow.DataContext = this;
             this.settingsWindow = settingsWindow;
             this.settingsService = settingsService;
@@ -42,7 +43,14 @@ namespace DuplicatesGui.ViewModel
 
         void UpdateViewModel(Settings settings)
         {
-            Filter = settings != null ? settings.Filter : "*.*";
+            if(settings == null || settings.Filter == null)
+            {
+                Filter = "*.*";
+            }
+            else
+            {
+                Filter = settings.Filter;
+            }
         }
 
         private void HandleOK()

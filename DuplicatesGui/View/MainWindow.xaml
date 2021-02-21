@@ -4,12 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DuplicatesGui"
+        xmlns:vm="clr-namespace:DuplicatesGui.ViewModel"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800"
-        Cursor="{Binding Cursor}">
+        Cursor="{Binding Cursor}"
+        d:DataContext="{d:DesignInstance vm:DuplicatesViewModel, d:IsDesignTimeCreatable=True}">
     <Window.Resources>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
         <local:ProgressToVisibilityConverter x:Key="progressToVisibilityConverter"/>
         <local:InvertedProgressToVisibilityConverter x:Key="invertedProgressToVisibilityConverter"/>
         <local:ItemsCountToVisibilityConverter x:Key="itemsCountToVisibilityConverter"/>
@@ -22,6 +27,23 @@
             <Setter Property="Width" Value="50" />
             <Setter Property="Margin" Value="10"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" Value="0.6"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
@@ -69,42 +91,45 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
-        <Button Grid.Row="1" Content="Browse" Style="{StaticResource ButtonStyle}" Command="{Binding BrowseCommand}"></Button>
-        <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
-             HorizontalAlignment="Left"
-             Margin="100,10,0,10"
-             Text="{Binding StartPath, UpdateSourceTrigger=PropertyChanged}"
-             MinWidth="200"/>
-        <TextBlock HorizontalAlignment="Right" Margin="10,0,10,0">
-          <Run Text="Selected filter: "/>
-          <Run Text="{Binding Filter}"/>
-        </TextBlock>
-        <Button Grid.Row="2" Content="Start"  Style="{StaticResource ButtonStyle}" Command="{Binding StartCommand}"  Visibility="{Binding IsIdle,Converter={StaticResource BooleanToVisibilityConverter}}"></Button>
-        <Button Grid.Row="2" Content="Cancel" Style="{StaticResource ButtonStyle}" Command="{Binding CancelCommand}" Visibility="{Binding IsIdle,Converter={StaticResource InvertedBooleanToVisibilityConverter}}"></Button>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource ButtonStyle}" Command="{Binding BrowseCommand}" AllowDrop="True"
+                    PreviewDragEnter="TextBox_PreviewDragOver"
+                    PreviewDragOver="TextBox_PreviewDragOver"
+                    PreviewDrop="TextBox_PreviewDrop"
+                    ToolTip="Select search root">
+                <Image Source="/Icons/addfolder.png"/>
+            </Button>
+            <Label Grid.Column="1" x:Name="pathTextBox" HorizontalAlignment="Left" Margin="10,20,10,10"
+                   Content="{Binding StartPath}"/>
+            <TextBlock Grid.Column="2" HorizontalAlignment="Right" Margin="10,20,10,0">
+                <Run Text="Selected filter: "/>
+                <Run Text="{Binding Filter}"/>
+            </TextBlock>
+        </Grid>
+        <Button Grid.Row="2" ToolTip="Click to start scan"  Style="{StaticResource ButtonStyle}" Command="{Binding StartCommand}"  Visibility="{Binding IsIdle,Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Image Source="/Icons/play.png"/>
+        </Button>
+        <Button Grid.Row="2" ToolTip="Click to cancel scanning" Style="{StaticResource ButtonStyle}" Command="{Binding CancelCommand}" Visibility="{Binding IsIdle,Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+            <Image Source="/Icons/stop.png"/>
+        </Button>
         <StackPanel Grid.Row="3"
                 Grid.Column="1"
                 Visibility="{Binding Duplicates.Count, Converter={StaticResource invertedItemsCountToVisibilityConverter}}" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image Source="/Icons/information.png" Height="32" Width="32"/>
             <Label Content="No Duplicate Files" FontStyle="Oblique" FontSize="20"/>
         </StackPanel>
-        <ListView
-        Grid.Row="3"
-        Grid.Column="0"
-        Grid.RowSpan="2"
-        Name="lvDuplicates"
-        SelectedItem="{Binding CurrentItem}"
-        ItemsSource="{Binding Duplicates}"
-        PreviewMouseLeftButtonUp="listView_Click"
-        MouseDoubleClick="listView_Double_Click"
-        MinHeight="300"
-        MinWidth="400"
-        Margin="10"
-        VerticalContentAlignment="Top"
-        ScrollViewer.VerticalScrollBarVisibility="Visible"
-        ScrollViewer.CanContentScroll="True"
-        VerticalAlignment="Stretch"
-        HorizontalAlignment="Stretch"
-        Visibility="{Binding Duplicates.Count, Converter={StaticResource itemsCountToVisibilityConverter}}">
+        <ListView Grid.Row="3" Grid.Column="0" Grid.RowSpan="2" Name="lvDuplicates"
+                  SelectedItem="{Binding CurrentItem}" ItemsSource="{Binding Duplicates}"
+                  PreviewMouseLeftButtonUp="listView_Click" MouseDoubleClick="listView_Double_Click"
+                  MinHeight="300" MinWidth="400" Margin="10"
+                  VerticalContentAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
+                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                  Visibility="{Binding Duplicates.Count, Converter={StaticResource itemsCountToVisibilityConverter}}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <ei:ChangePropertyAction TargetObject="{Binding Mode=OneWay}" PropertyName="SelectedItems" Value="{Binding Path=SelectedItems, ElementName=lvDuplicates}"/>

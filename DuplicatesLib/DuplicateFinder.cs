@@ -20,16 +20,6 @@ namespace DuplicatesLib
 
     public class DuplicateFinder : IDuplicateFinder
     {
-        //private readonly string m_path;
-        //private readonly string m_filter;
-
-
-        //public DuplicateFinder(string path, string filter = "*.*")
-        //{
-        //    m_path = path;
-        //    m_filter = filter;
-        //}
-
         public List<SingleFileEntry> QueryDuplicates(BackgroundWorker bgw, DoWorkEventArgs eventArgs, string path, string searchFilter = "*.*")
         {
             var res = new List<SingleFileEntry>();
